@@ -1,0 +1,36 @@
+from bs4 import BeautifulSoup
+import requests
+
+URLs = {
+    'BTC':  'https://coinmarketcap.com/currencies/bitcoin/',
+    'ETH:': 'https://coinmarketcap.com/currencies/ethereum/',
+    'SAND': 'https://coinmarketcap.com/currencies/the-sandbox/',
+    'ADA': 'https://coinmarketcap.com/currencies/cardano/',
+    'FTT': 'https://coinmarketcap.com/currencies/ftx-token/',
+    'ATLAS': 'https://coinmarketcap.com/currencies/star-atlas/',
+    'POLIS': 'https://coinmarketcap.com/currencies/star-atlas-polis/',   
+}
+
+# Create empty dicts to store the page data
+page_dict = {}
+soup_dict = {}
+name_dict = {}
+price_dict = {}
+
+for i in URLs.values():  
+    page = requests.get(i)                                # Request each URL
+    for _ in URLs.keys():
+        coin_name = _
+        page_dict[coin_name] = page                       # Create dicttionary that stores each coin name and associated page to be req
+
+        for ii in page_dict.values():
+            soup = BeautifulSoup(ii.content, 'html.parser')
+            soup_dict[coin_name] = soup                   # Create a dictionary to store each coin name and associated bs4 page
+
+        for iii in soup_dict.values(): 
+            name = iii.h2.small.text                      # Extract the names from the <html> text using the BeautifulSoup 
+    
+        for iiii in soup_dict.values():
+            price = iiii.find(class_='priceValue').text   # Extract the prices from the <html> text
+    
+    print(name + ': ' + price)
