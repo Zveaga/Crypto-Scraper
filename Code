@@ -11,7 +11,7 @@ URLs = {
     'POLIS': 'https://coinmarketcap.com/currencies/star-atlas-polis/',   
 }
 
-# Create empty dicts to store the page data
+# Create empty dicts to store crypto names and associated prices
 page_dict = {}
 soup_dict = {}
 name_dict = {}
@@ -21,16 +21,16 @@ for i in URLs.values():
     page = requests.get(i)                                # Request each URL
     for _ in URLs.keys():
         coin_name = _
-        page_dict[coin_name] = page                       # Create a dictionary that stores each coin name and associated page to be req
+        page_dict[coin_name] = page                       # Create a dictionary that stores each coin name and associated page to be requested
 
         for ii in page_dict.values():
             soup = BeautifulSoup(ii.content, 'html.parser')
-            soup_dict[coin_name] = soup                   # Create a dictionary to store each coin name and associated bs4 page
+            soup_dict[coin_name] = soup                   # Create a dictionary to store each coin name and associated BeautifulSoup page
 
         for iii in soup_dict.values(): 
-            name = iii.h2.small.text                      # Extract the names from the <html> text using the BeautifulSoup 
+            name = iii.h2.small.text                      # Extract the crypto names from the <html> text using the BeautifulSoup element
     
         for iiii in soup_dict.values():
-            price = iiii.find(class_='priceValue').text   # Extract the prices from the <html> text
+            price = iiii.find(class_='priceValue').text   # Extract the crypto prices from the <html> text using the BeautifulSoup element
     
     print(name + ': ' + price)
