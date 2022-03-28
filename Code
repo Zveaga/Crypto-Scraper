@@ -21,7 +21,7 @@ for i in URLs.values():
     page = requests.get(i)                                # Request each URL
     for _ in URLs.keys():
         coin_name = _
-        page_dict[coin_name] = page                       # Create dicttionary that stores each coin name and associated page to be req
+        page_dict[coin_name] = page                       # Create dictionary that stores each coin name and associated page to be req
 
         for ii in page_dict.values():
             soup = BeautifulSoup(ii.content, 'html.parser')
